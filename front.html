@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="us">
+<head>
+	<meta charset="utf-8">
+	<title>Tast page</title>
+	<link href="jquery/jquery-ui.css" rel="stylesheet">
+	<link href="front.css" rel="stylesheet">
+	<script src="jquery/external/jquery/jquery.js"></script>
+	<script src="jquery/jquery-ui.js"></script>
+	<script type="text/javascript" src="canvas/jquery.canvasjs.min.js"></script>
+	<script type="text/javascript" src="front.js"></script>
+</head>
+<body>
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">First</a></li>
+		<li><a href="#tabs-2">Second</a></li>
+		<li><a href="#tabs-3">Third</a></li>
+	</ul>
+	<div id="tabs-1">
+		<p>
+			<label for="username">Username</label>
+			<input type="text" id="username">
+		</p>
+		<p>
+			<label for="nickname">Nickname</label>
+			<input type="text" id="nickname">
+		</p>
+		<p>
+			<button id="button" class="button" onclick="login()">Next</button>
+		</p>
+	</div>
+	<div id="tabs-2">
+		<p>
+			<h2 class="demoHeaders">Choose</h2>
+			<select id="selectmenu">
+				<option>Option1</option>
+				<option>Option2</option>
+				<option>Option3</option>
+			</select>
+		</p>
+		<p>
+			<div id="eq">
+			  <p>88</p>
+			  <p>77</p>
+			  <p>55</p>
+			</div>
+			<label for="amount">price:</label>
+			<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+		 </p>
+		 <p>
+			<button id="button" class="button" onclick="results()">Next</button>
+		</p>
+	</div>
+	<div id="tabs-3">
+		<div id="chartContainer" style="height: 300px; width: 100%;">
+		</div>
+	</div>
+</div>
+<script>
+	
+	var tab = $.url.param("tab");
+	if (! tab) {
+		tab = 0;
+	}	
+	$( "#tabs" ).tabs({ active: tab });
+	$( ".button" ).button();
+	$( "#selectmenu" ).selectmenu();
+	$( "#eq > p" ).each(function() {
+      // read initial values from markup and remove that
+      var value = parseInt( $( this ).text(), 10 );
+      $( this ).empty().slider({
+        value: value,
+		min: 0,
+		max: 100,
+		range: "min",
+        animate: true,
+      });
+    });
+
+/*	
+	$( "#slider" ).slider({
+		value: 17,
+		min: 0,
+		max: 100,
+		range: "min",
+		animate: true,
+		slide: function( event, ui ) {
+			$( "#amount" ).val( "$" + ui.value );
+		}
+	});
+	$( "#amount" ).val( "$" + $( "#slider" ).slider( "value" ) );
+*/
+	var chart = createChart();
+	chart.render();
+
+</script>
+</body>
+</html>
