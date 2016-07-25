@@ -11,8 +11,10 @@ function results() {
 	var maltaisuus = $("#maltaisuus").slider("value");
 	var makeus = $("#makeus").slider("value");
 	var miellyttavyys = $("#miellyttavyys").slider("value");
-	location.href = 'front.jss?tab=2&' +
-	'savuisuus=' + savuisuus + 
+	var product = $("#product").val();
+	location.href = 'front.jss?tab=2' +
+	'&product=' + product +
+	'&savuisuus=' + savuisuus + 
 	'&vaniljaisuus=' + vaniljaisuus + 
 	'&kukkaisuus=' + kukkaisuus +
 	'&mausteisuus=' + mausteisuus + 

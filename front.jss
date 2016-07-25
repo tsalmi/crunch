@@ -12,7 +12,7 @@
 	<script type="text/javascript" src="front.js"></script>
 </head>
 <?
-	include("/timopersonal/viski/sqlcalls.jss");
+	include("/Users/v-tisal/git/crunch/sqlcalls.jss");
 	if (request.query.username) {
 		session.data.username = request.query.username;
 		dbCreateUser(session.data.username, request.query.nickname);		

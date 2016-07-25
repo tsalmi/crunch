@@ -38,12 +38,22 @@
 		write("connected to database<br>");
 		connection.query('insert into evaluation set ?', evaluation, 
 			function(err, res){
-			if(err) write( "Error: " + err);
-			return write('Last insert ID: ' + res.insertId);
+				if(err) { 
+					write( "Error: " + err);
+				}
+				else {
+					dbFindEvaluations(evaluation.product);
+				}
+				if (res.insertId) {
+					write('Last insert ID: ' + res.insertId);
+				}	
 			});
 	}
 			
-	 
+	var dbFindEvaluations(product, login) {
+		SELECT * FROM viski.evaluation where login='foo' and product=1
+			
+	}
 	 
 	 var createConnection = function() {
 		 var connection = mysql.createConnection({
