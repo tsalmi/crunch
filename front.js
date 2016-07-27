@@ -1,6 +1,18 @@
+var products = [
+];
+products[1] = "Lumia";
+products[2] = "Windows 10";
+
+
 function login() {
 	location.href = "front.jss?username=" + $("#username").val() + "&nickname=" + $("#nickname").val() + "&tab=1";  
 	// $( "#tabs" ).tabs({ active: 1 });
+}
+
+function initProducts() {
+	for (var i in products) {
+		$('#product').append('<option value="'+ i + '">' + products[i] + '</option>');
+	}
 }
 
 function results() {
@@ -25,10 +37,17 @@ function results() {
 }
 
 function createChart() {
+	var result = getCookie("result");
+	if (result) {
+		var json = JSON.parse(result);
+	}
+	var own = json.own[0];
+	var all = json.all[0];
+	
 	var chart = new CanvasJS.Chart("chartContainer",
 	{
 		theme: "theme3",
-					animationEnabled: true,
+				animationEnabled: true,
 		title:{
 			text: "Survey results",
 			fontSize: 30
@@ -45,39 +64,33 @@ function createChart() {
 		data: [ 
 		{
 			type: "column",	
-			name: "Proven Oil Reserves (bn)",
-			legendText: "Proven Oil Reserves",
-			showInLegend: false, 
+			name: "Oma arvio",
+			legendText: "Oma arvio",
+			showInLegend: true, 
 			dataPoints:[
-			{label: "Saudi", y: 262},
-			{label: "Venezuela", y: 211},
-			{label: "Canada", y: 175},
-			{label: "Iran", y: 137},
-			{label: "Iraq", y: 115},
-			{label: "Kuwait", y: 104},
-			{label: "UAE", y: 97.8},
-			{label: "Russia", y: 60},
-			{label: "US", y: 23.3},
-			{label: "China", y: 20.4}
+			{label: "Savuisuus", y: own.savuisuus},
+			{label: "Vaniljaisuus", y: own.vaniljaisuus},
+			{label: "Kukkaisuus", y: own.kukkaisuus},
+			{label: "Mausteisuus", y: own.mausteisuus},
+			{label: "Maltaisuus", y: own.maltaisuus},
+			{label: "Makeus", y: own.makeus},
+			{label: "Miellyttavyys", y: own.miellyttavyys},
 			]
 		},
 		{
 			type: "column",	
-			name: "Oil Production (million/day)",
-			legendText: "Oil Production",
+			name: "Kaikkien keskiarvo",
+			legendText: "Kaikkien keskiarvo",
 			axisYType: "secondary",
-			showInLegend: false,
+			showInLegend: true,
 			dataPoints:[
-			{label: "Saudi", y: 11.15},
-			{label: "Venezuela", y: 2.5},
-			{label: "Canada", y: 3.6},
-			{label: "Iran", y: 4.2},
-			{label: "Iraq", y: 2.6},
-			{label: "Kuwait", y: 2.7},
-			{label: "UAE", y: 3.1},
-			{label: "Russia", y: 10.23},
-			{label: "US", y: 10.3},
-			{label: "China", y: 4.3}
+			{label: "Savuisuus", y: all.savuisuus},
+			{label: "Vaniljaisuus", y: all.vaniljaisuus},
+			{label: "Kukkaisuus", y: all.kukkaisuus},
+			{label: "Mausteisuus", y: all.mausteisuus},
+			{label: "Maltaisuus", y: all.maltaisuus},
+			{label: "Makeus", y: all.makeus},
+			{label: "Miellyttavyys", y: all.miellyttavyys},
 			]
 		}
 		

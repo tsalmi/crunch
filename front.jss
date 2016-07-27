@@ -58,9 +58,7 @@
 		<p>
 			<h2 class="demoHeaders">Choose</h2>
 			<select id="product">
-				<option value="1">Lumia</option>
-				<option value="2">Windows 10 Standard edition</option>
-				<option value="3">Windows 10 Enterprice</option>
+				
 			</select>
 		</p>
 		<p>
@@ -112,9 +110,11 @@
 	// if (action == 'save') {
 	//	location.href = "front.jss?action=result&tab=2&product=" + url("?product")
 	// }
+	initProducts();
 	$( "#tabs" ).tabs({ active: tab });
 	$( ".button" ).button();
 	$( "#selectmenu" ).selectmenu();
+	
 	$( ".evaluation" ).slider({
         value: 50,
 		min: 0,
@@ -128,9 +128,6 @@
 	$( document ).ready(function() {
 		if (action == 'save') {
 			document.location.href = "/front.jss?tab=2";
-		}
-		if (tab == 2) {
-			alert(document.cookie);
 		}
 	});
 

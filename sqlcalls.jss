@@ -65,8 +65,8 @@
 		        }
 		        else {
 		        	session.data.result.own = rows;			        			        	
-		        	connection.query("select avg(savuisuus) savuisuus, avg(vaniljaisuus) savuisuus, avg(kukkaisuus) kukkaisuus," +
-		        			"avg(mausteisuus) mausteisuus, avg(maltaisuus), avg(makeus) makeus, avg(miellyttavyys) miellyttavyys "+
+		        	connection.query("select avg(savuisuus) savuisuus, avg(vaniljaisuus) vaniljaisuus, avg(kukkaisuus) kukkaisuus," +
+		        			"avg(mausteisuus) mausteisuus, avg(maltaisuus) maltaisuus, avg(makeus) makeus, avg(miellyttavyys) miellyttavyys "+
 		        	 "FROM viski.evaluation " +
 		        	 "where product=?", [product],
 		 			function(err, rows, fields) {				
