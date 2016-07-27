@@ -8,51 +8,79 @@
 		connection.connect(function(err)  { return "cannot connect to database" });
 		write("connected to database<br>");
 		var userData = { login: username, nickname: nickname };
-		connection.query('insert into userdata set ?', userData, 
+		connection.query('delete from userdata where login = ?', [ username ], 
 			function(err, res){
-			if(err) write( "Error: " + err);
-			else 
-				write('Last insert ID: ' + res.insertId);
-});
-			
-	/*	
-		function(err, rows, fields) {
-			write(JSON.stringify(rows));
-			
-			if (err) throw err;
-			for (var i = 0; i < rows.length; i++) {
-				var name = rows[i].name;
-				write('index' + i);
-				write('Row: ' + i + " name: " + name + JSON.stringify(rows[i]));
-			}
-		});
-*/
-		connection.end();
+				if(err) { 
+					write( "Error: " + err);
+					connection.end();
+				}
+				else {
+					connection.query('insert into userdata set ?', userData, 
+						function(err, res){
+						if(err)  {
+							write( "Error: " + err);
+						}
+						else { 
+							write('Last insert ID: ' + res.insertId);
+						}
+					});
+					connection.end();
+				}
+		});		
 	 }
 
 	var dbCreateEvaluation = function(evaluation) {	
 		/* 
 		*/
 		var connection = createConnection();
-		connection.connect(function(err)  { return "cannot connect to database" });
-		write("connected to database<br>");
-		connection.query('insert into evaluation set ?', evaluation, 
+		connection.connect(function(err)  { write("cannot connect to database") });
+		connection.query('delete from evaluation where product = ? and login = ?', [ evaluation.product, evaluation.login], 
 			function(err, res){
 				if(err) { 
 					write( "Error: " + err);
+					connection.end();
 				}
 				else {
-					dbFindEvaluations(evaluation.product);
-				}
-				if (res.insertId) {
-					write('Last insert ID: ' + res.insertId);
-				}	
+					connection.query('insert into evaluation set ?', evaluation, 
+						function(err, res){
+							if(err) { 
+								write( "Error: " + err);
+								connection.end();		
+							}
+							else {
+								dbFindEvaluations(connection, evaluation.product, evaluation.login);
+							}				
+					});
+				}				
 			});
 	}
 			
-	var dbFindEvaluations(product, login) {
-		SELECT * FROM viski.evaluation where login='foo' and product=1
-			
+	var dbFindEvaluations = function(connection, product, login) {
+		session.data.result = {};
+		connection.query("SELECT * FROM evaluation where product=? and login=?", [product, login], 
+			function(err, rows, fields) {				
+		        if (err) {
+		        	write(err);
+		        	connection.end();
+		        }
+		        else {
+		        	session.data.result.own = rows;			        			        	
+		        	connection.query("select avg(savuisuus) savuisuus, avg(vaniljaisuus) savuisuus, avg(kukkaisuus) kukkaisuus," +
+		        			"avg(mausteisuus) mausteisuus, avg(maltaisuus), avg(makeus) makeus, avg(miellyttavyys) miellyttavyys "+
+		        	 "FROM viski.evaluation " +
+		        	 "where product=?", [product],
+		 			function(err, rows, fields) {				
+		 		        if (err) {
+		 		        	write(err);
+		 		        }
+		 		        else {
+		 		        	session.data.result.all = rows;			        			        	
+		 		        }
+		        	});
+		        	connection.end();
+		        }
+		});
+					
 	}
 	 
 	 var createConnection = function() {

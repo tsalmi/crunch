@@ -12,7 +12,7 @@ function results() {
 	var makeus = $("#makeus").slider("value");
 	var miellyttavyys = $("#miellyttavyys").slider("value");
 	var product = $("#product").val();
-	location.href = 'front.jss?tab=2' +
+	location.href = 'front.jss?action=save&tab=1' +
 	'&product=' + product +
 	'&savuisuus=' + savuisuus + 
 	'&vaniljaisuus=' + vaniljaisuus + 
@@ -30,24 +30,24 @@ function createChart() {
 		theme: "theme3",
 					animationEnabled: true,
 		title:{
-			text: "Crude Oil Reserves Vs Production, 2011",
+			text: "Survey results",
 			fontSize: 30
 		},
 		toolTip: {
 			shared: true
 		},			
 		axisY: {
-			title: "billion of barrels"
+			title: "Oma arviointi"
 		},
 		axisY2: {
-			title: "million barrels/day"
+			title: "Käyttäjien mediaani"
 		},			
 		data: [ 
 		{
 			type: "column",	
 			name: "Proven Oil Reserves (bn)",
 			legendText: "Proven Oil Reserves",
-			showInLegend: true, 
+			showInLegend: false, 
 			dataPoints:[
 			{label: "Saudi", y: 262},
 			{label: "Venezuela", y: 211},
@@ -66,7 +66,7 @@ function createChart() {
 			name: "Oil Production (million/day)",
 			legendText: "Oil Production",
 			axisYType: "secondary",
-			showInLegend: true,
+			showInLegend: false,
 			dataPoints:[
 			{label: "Saudi", y: 11.15},
 			{label: "Venezuela", y: 2.5},
@@ -96,5 +96,11 @@ function createChart() {
 	  },
 	});
 	return chart;
+}
+
+function getCookie(name) {
+	var value = "; " + document.cookie;
+	var parts = value.split("; " + name + "=");
+	if (parts.length == 2) return parts.pop().split(";").shift();
 }
 	

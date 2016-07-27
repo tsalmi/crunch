@@ -1,26 +1,13 @@
-<!doctype html>
-<html lang="us">
-<head>
-	<meta charset="utf-8">
-	<title>Tast page</title>
-	<link href="jquery/jquery-ui.css" rel="stylesheet">
-	<link href="front.css" rel="stylesheet">
-	<script src="jquery/external/jquery/jquery.js"></script>
-	<script type="text/javascript" src="jquery/url.js"></script>
-	<script src="jquery/jquery-ui.js"></script>
-	<script type="text/javascript" src="canvas/jquery.canvasjs.min.js"></script>
-	<script type="text/javascript" src="front.js"></script>
-</head>
 <?
+	if (session.data.result) {	
+		response.headers['Set-Cookie']  = 'result=' + JSON.stringify(session.data.result);
+	}
 	include("/Users/v-tisal/git/crunch/sqlcalls.jss");
 	if (request.query.username) {
 		session.data.username = request.query.username;
 		dbCreateUser(session.data.username, request.query.nickname);		
 	}
-	write("Query: " + request.query.username);
-	write("<br>session: " + session.data.username);
-	
-	if (request.query.savuisuus) {
+	if (request.query.action == 'save') {
 		dbCreateEvaluation({
 			login : session.data.username,
 			product: request.query.product,
@@ -34,6 +21,19 @@
 		});
 	}
 ?>
+<!doctype html>
+<html lang="us">
+<head>
+	<meta charset="utf-8">
+	<title>Tast page</title>
+	<link href="jquery/jquery-ui.css" rel="stylesheet">
+	<link href="front.css" rel="stylesheet">
+	<script src="jquery/external/jquery/jquery.js"></script>
+	<script type="text/javascript" src="jquery/url.js"></script>
+	<script src="jquery/jquery-ui.js"></script>
+	<script type="text/javascript" src="canvas/jquery.canvasjs.min.js"></script>
+	<script type="text/javascript" src="front.js"></script>
+</head>
 <body>
 <div id="tabs">
 	<ul>
@@ -97,15 +97,21 @@
 		</p>
 	</div>
 	<div id="tabs-3">
+		<span id="result"></span>
 		<div id="chartContainer" style="height: 300px; width: 100%;">
 		</div>
 	</div>
 </div>
 <script>
 	var tab = url("?tab");
+	var action = url("?action");
 	if (! tab) {
 		tab = 0;
 	}	
+	
+	// if (action == 'save') {
+	//	location.href = "front.jss?action=result&tab=2&product=" + url("?product")
+	// }
 	$( "#tabs" ).tabs({ active: tab });
 	$( ".button" ).button();
 	$( "#selectmenu" ).selectmenu();
@@ -119,6 +125,14 @@
 	
 	var chart = createChart();
 	chart.render();
+	$( document ).ready(function() {
+		if (action == 'save') {
+			document.location.href = "/front.jss?tab=2";
+		}
+		if (tab == 2) {
+			alert(document.cookie);
+		}
+	});
 
 </script>
 </body>
