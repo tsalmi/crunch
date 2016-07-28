@@ -36,7 +36,7 @@ function results() {
 //	$( "#tabs" ).tabs({ active: 2 });
 }
 
-function createChart() {
+function createChart(product) {
 	var result = getCookie("result");
 	if (result) {
 		var json = JSON.parse(result);
@@ -49,17 +49,21 @@ function createChart() {
 		theme: "theme3",
 				animationEnabled: true,
 		title:{
-			text: "Survey results",
+			text: "Survey results for " + products[json.product],
 			fontSize: 30
 		},
 		toolTip: {
 			shared: true
 		},			
 		axisY: {
-			title: "Oma arviointi"
+			title: "Oma arviointi",
+			minimum: 0,
+			maximum: 100,
 		},
 		axisY2: {
-			title: "Käyttäjien mediaani"
+			title: "Vastanneiden keskiarvo",
+			minimum: 0,
+			maximum: 100,			
 		},			
 		data: [ 
 		{

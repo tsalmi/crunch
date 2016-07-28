@@ -74,7 +74,8 @@
 		 		        	write(err);
 		 		        }
 		 		        else {
-		 		        	session.data.result.all = rows;			        			        	
+		 		        	session.data.result.all = rows;			
+		 		        	session.data.result.product = product;
 		 		        }
 		        	});
 		        	connection.end();

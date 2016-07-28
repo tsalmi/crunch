@@ -106,28 +106,22 @@
 	if (! tab) {
 		tab = 0;
 	}	
-	
-	// if (action == 'save') {
-	//	location.href = "front.jss?action=result&tab=2&product=" + url("?product")
-	// }
 	initProducts();
 	$( "#tabs" ).tabs({ active: tab });
 	$( ".button" ).button();
-	$( "#selectmenu" ).selectmenu();
-	
+	$( "#selectmenu" ).selectmenu();		
 	$( ".evaluation" ).slider({
         value: 50,
 		min: 0,
 		max: 100,
 		range: "min",
         animate: true,
-      });
-	
-	var chart = createChart();
+     });
+	var chart = createChart(product);
 	chart.render();
 	$( document ).ready(function() {
 		if (action == 'save') {
-			document.location.href = "/front.jss?tab=2";
+			document.location.href = '/front.jss?tab=2';
 		}
 	});
 
