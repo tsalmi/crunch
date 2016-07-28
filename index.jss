@@ -229,7 +229,7 @@
 	chart.render();
 	$( document ).ready(function() {
 		if (action == 'save') {
-			document.location.href = '/index.jss?tab=2';
+			document.location.href = 'index.jss?tab=2';
 		}
 	});
 
