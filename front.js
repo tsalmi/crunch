@@ -1,7 +1,8 @@
 var products = [
 ];
-products[1] = "Lumia";
-products[2] = "Windows 10";
+products[1] = "Laphroiag";
+products[2] = "Buffalo Trace";
+products[3] = "Jim Beam";
 
 
 function login() {
@@ -52,14 +53,14 @@ function createChart(product) {
 		theme: "theme3",
 				animationEnabled: true,
 		title:{
-			text: "Survey results for " + products[json.product],
+			text: "Tulokset viskille " + products[json.product],
 			fontSize: 30
 		},
 		toolTip: {
 			shared: true
 		},			
 		axisY: {
-			title: "Oma arviointi",
+			title: "Oma arvio",
 			minimum: 0,
 			maximum: 100,
 		},
@@ -86,8 +87,8 @@ function createChart(product) {
 		},
 		{
 			type: "column",	
-			name: "Kaikkien keskiarvo",
-			legendText: "Kaikkien keskiarvo",
+			name: "Vastanneiden keskiarvo",
+			legendText: "Vastanneiden keskiarvo",
 			axisYType: "secondary",
 			showInLegend: true,
 			dataPoints:[

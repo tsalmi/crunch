@@ -145,9 +145,9 @@
 <body>
 <div id="tabs">
 	<ul>
-		<li><a href="#tabs-1">Log in</a></li>
-		<li><a href="#tabs-2">Evaluation</a></li>
-		<li><a href="#tabs-3">See summary</a></li>
+		<li><a href="#tabs-1">Kirjautuminen</a></li>
+		<li><a href="#tabs-2">Oma arvostelu</a></li>
+		<li><a href="#tabs-3">Tulokset</a></li>
 	</ul>
 	<div id="tabs-1">
 		<p>
@@ -155,51 +155,51 @@
 			<input type="text" id="username">
 		</p>
 		<p>
-			<label for="nickname">Nickname</label>
+			<label for="nickname">Lempinimi</label>
 			<input type="text" id="nickname">
 		</p>
 		<p>
-			<button id="button" class="button" onclick="login()">Next</button>
+			<button id="button" class="button" onclick="login()">Seuraava</button>
 		</p>
 	</div>
 	<div id="tabs-2">
 		<p>
-			<h2 class="demoHeaders">Choose</h2>
+			<h2 class="demoHeaders">Valitse arvosteltava viski</h2>
 			<select id="product">
 				
 			</select>
 		</p>
 		<p>
-			  <h4>Evaluation 1</h4>
+			  <h4>Savuisuus</h4>
 			  <div id="savuisuus" class="evaluation"></div>
 		</p>
 		<p>
-			  <h4>Evaluation 2</h4>
+			  <h4>Vaniljaisuus</h4>
 			  <div id="vaniljaisuus" class="evaluation"></div>
 		 </p>
 		<p>
-			  <h4>Evaluation 3</h4>
+			  <h4>Kukkaisuus</h4>
 			  <div id="kukkaisuus" class="evaluation"></div>
 		</p>
 		<p>
-			  <h4>Evaluation 4</h4>
+			  <h4>Mausteisuus</h4>
 			  <div id="mausteisuus" class="evaluation"></div>
 		</p>
 		<p>
-			  <h4>Evaluation 5</h4>
+			  <h4>Maltaisuus</h4>
 			  <div id="maltaisuus" class="evaluation"></div>
 		</p>		
 		<p>
-			  <h4>Evaluation 6</h4>
+			  <h4>Makeus</h4>
 			  <div id="makeus" class="evaluation"></div>
 		</p>		
 		<p>
-			  <h4>Evaluation 7</h4>
+			  <h4>Miellyttavyys</h4>
 			  <div id="miellyttavyys" class="evaluation"></div>
 		</p>
 		<p></p>
 		<p>
-			<button id="button" class="button" onclick="results()">Next</button>
+			<button id="button" class="button" onclick="results()">Seuraava</button>
 		</p>
 	</div>
 	<div id="tabs-3">
