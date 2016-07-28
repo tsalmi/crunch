@@ -1,4 +1,8 @@
 <?
+	//	
+	// SQL CALLS 
+	//
+		
 	var mysql      = require('mysql');
 	
 	var dbCreateUser = function(username, nickname) {	
@@ -99,4 +103,7 @@
 		});
 		return connection;		
 	 }
+	 
+	 // 
+	 // END SQLCALLS
 ?>

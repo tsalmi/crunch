@@ -5,7 +5,7 @@ products[2] = "Windows 10";
 
 
 function login() {
-	location.href = "front.jss?username=" + $("#username").val() + "&nickname=" + $("#nickname").val() + "&tab=1";  
+	location.href = "index.jss?username=" + $("#username").val() + "&nickname=" + $("#nickname").val() + "&tab=1";  
 	// $( "#tabs" ).tabs({ active: 1 });
 }
 
@@ -24,7 +24,7 @@ function results() {
 	var makeus = $("#makeus").slider("value");
 	var miellyttavyys = $("#miellyttavyys").slider("value");
 	var product = $("#product").val();
-	location.href = 'front.jss?action=save&tab=1' +
+	location.href = 'index.jss?action=save&tab=1' +
 	'&product=' + product +
 	'&savuisuus=' + savuisuus + 
 	'&vaniljaisuus=' + vaniljaisuus + 
@@ -40,6 +40,9 @@ function createChart(product) {
 	var result = getCookie("result");
 	if (result) {
 		var json = JSON.parse(result);
+	}
+	else {
+		return;
 	}
 	var own = json.own[0];
 	var all = json.all[0];
