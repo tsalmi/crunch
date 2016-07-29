@@ -37,7 +37,7 @@ function results() {
 //	$( "#tabs" ).tabs({ active: 2 });
 }
 
-function createChart(product) {
+function createChart() {
 	var result = getCookie("result");
 	if (result) {
 		var json = JSON.parse(result);

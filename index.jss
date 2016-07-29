@@ -1,4 +1,5 @@
 <?
+	var saveDone = false;
 	if (session.data.result) {	
 		response.headers['Set-Cookie']  = 'result=' + JSON.stringify(session.data.result);
 	}
@@ -44,10 +45,11 @@
 			connection.query('delete from evaluation where product = ? and login = ?', [ evaluation.product, evaluation.login], 
 				function(err, res){
 					if(err) { 
-						write( "Error: " + err);
+						write( "Error: " + err);						
 						connection.end();
 					}
 					else {
+						write( "Deleted: " + err);
 						connection.query('insert into evaluation set ?', evaluation, 
 							function(err, res){
 								if(err) { 
@@ -55,6 +57,7 @@
 									connection.end();		
 								}
 								else {
+									write( "inserted: " + err);
 									dbFindEvaluations(connection, evaluation.product, evaluation.login);
 								}				
 						});
@@ -67,7 +70,7 @@
 			connection.query("SELECT * FROM evaluation where product=? and login=?", [product, login], 
 				function(err, rows, fields) {				
 			        if (err) {
-			        	write(err);
+			        	write(err);			        	
 			        	connection.end();
 			        }
 			        else {
@@ -81,9 +84,10 @@
 			 		        	write(err);
 			 		        }
 			 		        else {
+			 		        	write( "<br>found");
 			 		        	session.data.result.all = rows;			
 			 		        	session.data.result.product = product;
-			 		        }
+			 		        }			 		        
 			        	});
 			        	connection.end();
 			        }
@@ -93,17 +97,17 @@
 		 
 		 var createConnection = function() {
 			 var connection = mysql.createConnection({
-				/*
+				
 				host 	: 'localhost',
 				user 	: 'root',
 				password: 'qwerty',
 				database: 'viski'
-				*/ 
+				/* 
 				host     : 'mmdsql01.mmd.net',
 				user     : 'uniqueel',
 				password : 'qvBzZY8xkGrxffp3',
 				database : 'uniqueel'
-				
+				*/
 			});
 			return connection;		
 		 }
@@ -116,6 +120,7 @@
 		dbCreateUser(session.data.username, request.query.nickname);		
 	}
 	if (request.query.action == 'save') {
+		session.data.result.all = null;
 		dbCreateEvaluation({
 			login : session.data.username,
 			product: request.query.product,
@@ -127,6 +132,8 @@
 			makeus : request.query.makeus,
 			miellyttavyys : request.query.miellyttavyys
 		});
+		//while (!session.data.result.all) {
+		//}
 	}
 ?>
 <!doctype html>
@@ -225,7 +232,7 @@
 		range: "min",
         animate: true,
      });
-	var chart = createChart(product);
+	var chart = createChart();
 	chart.render();
 	$( document ).ready(function() {
 		if (action == 'save') {
