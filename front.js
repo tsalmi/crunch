@@ -1,8 +1,9 @@
 var products = [
 ];
-products[1] = "Laphroiag";
-products[2] = "Buffalo Trace";
-products[3] = "Jim Beam";
+products[1] = "Laphroaig 10y";
+products[2] = "Famous Grouse";
+products[3] = "Macallan 12y";
+products[4] = "Highland Park";
 
 
 function login() {
