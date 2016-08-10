@@ -47,6 +47,7 @@ function createChart() {
 		return;
 	}
 	var own = json.own[0];
+	var avg = json.avg[0];
 	var all = json.all[0];
 	
 	var chart = new CanvasJS.Chart("chartContainer",
@@ -93,13 +94,13 @@ function createChart() {
 			axisYType: "secondary",
 			showInLegend: true,
 			dataPoints:[
-			{label: "Savuisuus", y: all.savuisuus},
-			{label: "Vaniljaisuus", y: all.vaniljaisuus},
-			{label: "Kukkaisuus", y: all.kukkaisuus},
-			{label: "Mausteisuus", y: all.mausteisuus},
-			{label: "Maltaisuus", y: all.maltaisuus},
-			{label: "Makeus", y: all.makeus},
-			{label: "Miellyttavyys", y: all.miellyttavyys},
+			{label: "Savuisuus", y: avg.savuisuus},
+			{label: "Vaniljaisuus", y: avg.vaniljaisuus},
+			{label: "Kukkaisuus", y: avg.kukkaisuus},
+			{label: "Mausteisuus", y: avg.mausteisuus},
+			{label: "Maltaisuus", y: avg.maltaisuus},
+			{label: "Makeus", y: avg.makeus},
+			{label: "Miellyttavyys", y: avg.miellyttavyys},
 			]
 		}
 		
@@ -118,6 +119,17 @@ function createChart() {
 	  },
 	});
 	return chart;
+}
+
+var showPearson = function() {
+	var result = getCookie("result");
+	if (result) {
+		var json = JSON.parse(result);
+		calculatePearson(json.own[0], json.all);
+	}
+	else {
+		return;
+	}
 }
 
 function getCookie(name) {

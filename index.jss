@@ -74,11 +74,40 @@
 			        	connection.end();
 			        }
 			        else {
-			        	session.data.result.own = rows;			        			        	
-			        	connection.query("select avg(savuisuus) savuisuus, avg(vaniljaisuus) vaniljaisuus, avg(kukkaisuus) kukkaisuus," +
-			        			"avg(mausteisuus) mausteisuus, avg(maltaisuus) maltaisuus, avg(makeus) makeus, avg(miellyttavyys) miellyttavyys "+
-			        	 "FROM evaluation " +
-			        	 "where product=?", [product],
+			        	session.data.result.own = rows;
+			        	dbFindAvgEvaluations(connection, product);			        			        	
+			        }
+			});
+						
+		}
+
+		var dbFindAvgEvaluations = function(connection, product) {
+        	connection.query(
+        			"select avg(savuisuus) savuisuus, avg(vaniljaisuus) vaniljaisuus, avg(kukkaisuus) kukkaisuus," +
+        			"avg(mausteisuus) mausteisuus, avg(maltaisuus) maltaisuus, avg(makeus) makeus, avg(miellyttavyys) miellyttavyys "+
+        			"FROM evaluation " +
+        			"where product=?", [product],
+			 			function(err, rows, fields) {				
+			 		        if (err) {
+			 		        	write(err);
+			 		        }
+			 		        else {
+			 		        	write( "<br>found");
+			 		        	session.data.result.avg = rows;			
+			 		        	session.data.result.product = product;
+			 		        	dbFindAllEvaluations(connection, product);
+			 		        }			 		        
+			        	});
+		}
+		 
+
+		var dbFindAllEvaluations = function(connection, product) {
+        	connection.query(
+        			"select e.login login, nickname, savuisuus, vaniljaisuus, kukkaisuus," +
+        			"mausteisuus, maltaisuus, makeus, miellyttavyys " +
+        			"FROM evaluation e "+
+        			"join userdata u on u.login = e.login "+ 
+        			"where product=?", [product],
 			 			function(err, rows, fields) {				
 			 		        if (err) {
 			 		        	write(err);
@@ -86,16 +115,13 @@
 			 		        else {
 			 		        	write( "<br>found");
 			 		        	session.data.result.all = rows;			
-			 		        	session.data.result.product = product;
 			 		        }			 		        
 			        	});
-			        	connection.end();
-			        }
-			});
-						
+        	connection.end();
 		}
-		 
-		 var createConnection = function() {
+
+		
+		var createConnection = function() {
 			 var connection = mysql.createConnection({
 				
 				host 	: 'localhost',
@@ -120,7 +146,7 @@
 		dbCreateUser(session.data.username, request.query.nickname);		
 	}
 	if (request.query.action == 'save') {
-		session.data.result.all = null;
+		// session.data.result.all = null;
 		dbCreateEvaluation({
 			login : session.data.username,
 			product: request.query.product,
@@ -148,6 +174,7 @@
 	<script src="jquery/jquery-ui.js"></script>
 	<script type="text/javascript" src="canvas/jquery.canvasjs.min.js"></script>
 	<script type="text/javascript" src="front.js"></script>
+	<script type="text/javascript" src="pearson.js"></script>
 </head>
 <body>
 <div id="tabs">
@@ -166,7 +193,7 @@
 			<input type="text" id="nickname">
 		</p>
 		<p>
-			<button id="button" class="button" onclick="login()">Seuraava</button>
+			<button id="button" class="button" onclick="login()">Kirjaudu</button>
 		</p>
 	</div>
 	<div id="tabs-2">
@@ -178,6 +205,9 @@
 		</p>
 		<p>
 			  <h4>Savuisuus</h4>
+			  <h4 align="left">0 %</h4>
+			  <h4 align="right">100 %</h4>
+
 			  <div id="savuisuus" class="evaluation"></div>
 		</p>
 		<p>
@@ -206,7 +236,7 @@
 		</p>
 		<p></p>
 		<p>
-			<button id="button" class="button" onclick="results()">Seuraava</button>
+			<button id="button" class="button" onclick="results()">Tallenna</button>
 		</p>
 	</div>
 	<div id="tabs-3">
@@ -234,6 +264,7 @@
      });
 	var chart = createChart();
 	chart.render();
+	showPearson();
 	$( document ).ready(function() {
 		if (action == 'save') {
 			document.location.href = 'index.jss?tab=2';
