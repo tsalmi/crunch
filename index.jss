@@ -13,7 +13,7 @@
 			/* 
 			*/
 			var connection = createConnection();
-			connection.connect(function(err)  { if (err) write("cannot connect to database"); });
+			connection.connect(function(err)  { if (err) write("cannot connect to database"); }); 
 			// write("connected to database<br>");
 			var userData = { login: username, nickname: nickname };
 			connection.query('delete from userdata where login = ?', [ username ], 
@@ -79,7 +79,7 @@
 			        }
 			});
 						
-		}
+		} 
 
 		var dbFindAvgEvaluations = function(connection, product) {
         	connection.query(
@@ -146,7 +146,7 @@
 		dbCreateUser(session.data.username, request.query.nickname);		
 	}
 	if (request.query.action == 'save') {
-		// session.data.result.all = null;
+		// session.data.result.all = null; 
 		dbCreateEvaluation({
 			login : session.data.username,
 			product: request.query.product,
@@ -163,9 +163,9 @@
 	}
 ?>
 <!doctype html>
-<html lang="us">
+<html lang="fi">
 <head>
-	<meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
 	<title>Tast page</title>
 	<link href="jquery/jquery-ui.css" rel="stylesheet">
 	<link href="front.css" rel="stylesheet">
@@ -179,7 +179,7 @@
 <body>
 <div id="tabs">
 	<ul>
-		<li><a href="#tabs-1">Kirjautuminen</a></li>
+		<li><a href="#tabs-1">Kirjautuminen</a></li> 
 		<li><a href="#tabs-2">Oma arvostelu</a></li>
 		<li><a href="#tabs-3">Tulokset</a></li>
 	</ul>
@@ -240,9 +240,19 @@
 		</p>
 	</div>
 	<div id="tabs-3">
+		<span id="resultitle"></span>
 		<span id="result"></span>
-		<div id="chartContainer" style="height: 300px; width: 100%;">
-		</div>
+		<h4>L&auml;himp&auml;n&auml; omaa maukuasi olevat henkil&ouml;t</h4> 
+		<table id="pearsonlist">
+		</table>
+		<hr/>
+		<div id="chartAverage" style="height: 300px; width: 100%;"></div>
+		<hr/>
+		<div id="match0" style="height: 300px; width: 100%;"></div>
+		<hr/>
+		<div id="match1" style="height: 300px; width: 100%;"></div>
+		<hr/>
+		<div id="match2" style="height: 300px; width: 100%;"> </div>
 	</div>
 </div>
 <script>
@@ -262,7 +272,7 @@
 		range: "min",
         animate: true,
      });
-	var chart = createChart();
+	var chart = createAverageChart();
 	chart.render();
 	showPearson();
 	$( document ).ready(function() {

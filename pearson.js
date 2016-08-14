@@ -43,7 +43,7 @@ var calculatePearson = function(own, allData) {
 			var sumSq = Math.sqrt(ownSumDiffSq * theirSumDiffSq);	
 			var pearson = sumDiffMulti / sumSq;
 			pearsonVal.push({ 
-				login : their.nickname,
+				nickname : their.nickname,
 				pearson : pearson
 			});
 			
@@ -52,3 +52,5 @@ var calculatePearson = function(own, allData) {
 	
 	return pearsonVal;
 }
+
+

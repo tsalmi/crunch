@@ -2,7 +2,7 @@ var products = [
 ];
 products[1] = "Laphroaig 10y";
 products[2] = "Famous Grouse";
-products[3] = "Macallan 12y";
+products[3] = "Macallan 12y"; 
 products[4] = "Highland Park";
 
 
@@ -38,7 +38,7 @@ function results() {
 //	$( "#tabs" ).tabs({ active: 2 });
 }
 
-function createChart() {
+function createAverageChart() {
 	var result = getCookie("result");
 	if (result) {
 		var json = JSON.parse(result);
@@ -49,58 +49,68 @@ function createChart() {
 	var own = json.own[0];
 	var avg = json.avg[0];
 	var all = json.all[0];
+	$("#resultitle").html('<h4>Viski:' +  products[json.product] + '</h4>');
+	return createChart(
+			"chartAverage",
+			"Omat tulokset vs. kaikkien keskiarvo ",
+			"Oma arvio", 
+			"Vastanneiden keskiarvo",
+			own, 
+			all);
+}
 	
-	var chart = new CanvasJS.Chart("chartContainer",
+function createChart(id, title, axis1, axis2, data1, data2) {
+	var chart = new CanvasJS.Chart(id,
 	{
 		theme: "theme3",
 				animationEnabled: true,
 		title:{
-			text: "Tulokset viskille " + products[json.product],
-			fontSize: 30
+			text: title,
+			fontSize: 20
 		},
 		toolTip: {
 			shared: true
 		},			
 		axisY: {
-			title: "Oma arvio",
+			title: axis1,
 			minimum: 0,
 			maximum: 100,
 		},
 		axisY2: {
-			title: "Vastanneiden keskiarvo",
+			title: axis2,
 			minimum: 0,
 			maximum: 100,			
 		},			
 		data: [ 
 		{
 			type: "column",	
-			name: "Oma arvio",
-			legendText: "Oma arvio",
+			name: axis1,
+			legendText:  axis1,
 			showInLegend: true, 
 			dataPoints:[
-			{label: "Savuisuus", y: own.savuisuus},
-			{label: "Vaniljaisuus", y: own.vaniljaisuus},
-			{label: "Kukkaisuus", y: own.kukkaisuus},
-			{label: "Mausteisuus", y: own.mausteisuus},
-			{label: "Maltaisuus", y: own.maltaisuus},
-			{label: "Makeus", y: own.makeus},
-			{label: "Miellyttavyys", y: own.miellyttavyys},
+			{label: "Savuisuus", y: data1.savuisuus},
+			{label: "Vaniljaisuus", y: data1.vaniljaisuus},
+			{label: "Kukkaisuus", y: data1.kukkaisuus},
+			{label: "Mausteisuus", y: data1.mausteisuus},
+			{label: "Maltaisuus", y: data1.maltaisuus},
+			{label: "Makeus", y: data1.makeus},
+			{label: "Miellyttavyys", y: data1.miellyttavyys},
 			]
 		},
 		{
 			type: "column",	
-			name: "Vastanneiden keskiarvo",
-			legendText: "Vastanneiden keskiarvo",
+			name: axis2,
+			legendText: axis2,
 			axisYType: "secondary",
 			showInLegend: true,
 			dataPoints:[
-			{label: "Savuisuus", y: avg.savuisuus},
-			{label: "Vaniljaisuus", y: avg.vaniljaisuus},
-			{label: "Kukkaisuus", y: avg.kukkaisuus},
-			{label: "Mausteisuus", y: avg.mausteisuus},
-			{label: "Maltaisuus", y: avg.maltaisuus},
-			{label: "Makeus", y: avg.makeus},
-			{label: "Miellyttavyys", y: avg.miellyttavyys},
+			{label: "Savuisuus", y: data2.savuisuus},
+			{label: "Vaniljaisuus", y: data2.vaniljaisuus},
+			{label: "Kukkaisuus", y: data2.kukkaisuus},
+			{label: "Mausteisuus", y: data2.mausteisuus},
+			{label: "Maltaisuus", y: data2.maltaisuus},
+			{label: "Makeus", y: data2.makeus},
+			{label: "Miellyttavyys", y: data2.miellyttavyys},
 			]
 		}
 		
@@ -121,15 +131,48 @@ function createChart() {
 	return chart;
 }
 
+
 var showPearson = function() {
 	var result = getCookie("result");
+	var pearsonlist = $('#pearsonlist');
+	pearsonlist.empty();
+	pearsonlist.append('<tr><th>Lempinimi</th><th>Korrelaatio</th></tr>');
 	if (result) {
 		var json = JSON.parse(result);
-		calculatePearson(json.own[0], json.all);
+		pearson = calculatePearson(json.own[0], json.all);
+		pearson.sort(function(a, b){
+			return b.pearson - a.pearson;
+		});
+		for (var i = 0; i <= 2; i++) {
+			if (pearson[i]) {
+				pearsonlist.append('<tr><td><a href="#match' + i + '">' + pearson[i].nickname + '</a></td><td>' + pearson[i].pearson + '</td></tr>');
+				showCompareChart('match' + i, pearson[i].nickname, json.own[0], json.all);
+			}	
+		}
 	}
 	else {
 		return;
 	}
+}
+
+function showCompareChart(id, nickname, own, json) {
+	for (i in json) {
+		var person = json[i];
+		if (nickname == person.nickname) {
+			var other = person;
+		}
+		
+	}
+	
+	var chart =  createChart(
+			id,
+			'Omat tulokset vs. ' + nickname,
+			'Oma arvio', 
+			nickname,
+			own, 
+			other);
+	
+	chart.render();
 }
 
 function getCookie(name) {

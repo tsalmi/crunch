@@ -5,3 +5,12 @@
 	#eq > p {
     /* height:20px; width:1000px; margin:15px */
   }
+  
+  table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+    padding: 10px;
+}
