@@ -72,18 +72,20 @@ function createChart(id, title, axis1, axis2, data1, data2) {
 			shared: true
 		},			
 		axisY: {
-			title: axis1,
+			title: '',
 			minimum: 0,
 			maximum: 100,
+			interval: 100,
 		},
 		axisY2: {
-			title: axis2,
+			title: '',
 			minimum: 0,
-			maximum: 100,			
+			maximum: 100,
+			interval: 100
 		},			
 		data: [ 
 		{
-			type: "column",	
+			type: "spline",	
 			name: axis1,
 			legendText:  axis1,
 			showInLegend: true, 
@@ -98,7 +100,7 @@ function createChart(id, title, axis1, axis2, data1, data2) {
 			]
 		},
 		{
-			type: "column",	
+			type: "spline",	
 			name: axis2,
 			legendText: axis2,
 			axisYType: "secondary",
