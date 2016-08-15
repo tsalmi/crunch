@@ -1,5 +1,29 @@
 var calculatePearson = function(own, allData) {
 	var pearsonVal = [];
+		
+	for (i in allData) {
+		var their = allData[i];
+		if (their.login != own.login) {
+			var sumDiffSq = Math.pow(own.savuisuus - their.savuisuus,2) +  
+				Math.pow(own.vaniljaisuus - their.vaniljaisuus,2)  + Math.pow(own.kukkaisuus - their.kukkaisuus,2) + 
+				Math.pow(own.mausteisuus - their.mausteisuus, 2) + Math.pow(own.maltaisuus - their.maltaisuus, 2) + 
+				Math.pow(own.makeus - their.makeus, 2) + Math.pow(own.miellyttavyys - their.miellyttavyys, 2);
+						
+			var pearson = Math.sqrt(sumDiffSq / 7);
+			pearsonVal.push({ 
+				nickname : their.nickname,
+				pearson : pearson
+			});
+			
+		}
+	}
+	
+	return pearsonVal;
+}
+
+
+var calculatePearsonOld = function(own, allData) {
+	var pearsonVal = [];
 	
 	var ownTotal =  own.savuisuus + own.vaniljaisuus + own.kukkaisuus + own.mausteisuus + own.maltaisuus + own.makeus +own.miellyttavyys;
 	var ownMean = ownTotal / 7;

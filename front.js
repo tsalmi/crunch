@@ -141,11 +141,13 @@ var showPearson = function() {
 		var json = JSON.parse(result);
 		pearson = calculatePearson(json.own[0], json.all);
 		pearson.sort(function(a, b){
-			return b.pearson - a.pearson;
+			return a.pearson - b.pearson;
 		});
 		for (var i = 0; i <= 2; i++) {
 			if (pearson[i]) {
-				pearsonlist.append('<tr><td><a href="#match' + i + '">' + pearson[i].nickname + '</a></td><td>' + pearson[i].pearson + '</td></tr>');
+				pearsonlist.append('<tr><td><a href="#match' + i + '">' + 
+						pearson[i].nickname + '</a></td><td>' + 
+						parseFloat(pearson[i].pearson).toFixed(2) + '</td></tr>');
 				showCompareChart('match' + i, pearson[i].nickname, json.own[0], json.all);
 			}	
 		}
