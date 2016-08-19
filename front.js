@@ -48,7 +48,6 @@ function createAverageChart() {
 	}
 	var own = json.own[0];
 	var avg = json.avg[0];
-	var all = json.all[0];
 	$("#resultitle").html('<h4>Viski:' +  products[json.product] + '</h4>');
 	return createChart(
 			"chartAverage",
@@ -56,7 +55,7 @@ function createAverageChart() {
 			"Oma arvio", 
 			"Vastanneiden keskiarvo",
 			own, 
-			all);
+			avg);
 }
 	
 function createChart(id, title, axis1, axis2, data1, data2) {

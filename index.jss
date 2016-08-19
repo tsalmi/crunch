@@ -272,9 +272,11 @@
 		range: "min",
         animate: true,
      });
-	var chart = createAverageChart();
-	chart.render();
-	showPearson();
+	if (tab == 2) {
+		var chart = createAverageChart();
+		chart.render();
+		showPearson();
+	}
 	$( document ).ready(function() {
 		if (action == 'save') {
 			document.location.href = 'index.jss?tab=2';
