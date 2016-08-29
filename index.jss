@@ -208,7 +208,7 @@
 			  <h4 align="left">0 %</h4>
 			  <h4 align="right">100 %</h4>
 
-			  <div id="savuisuus" class="evaluation"></div>
+			  <div id="savuisuus" class="evaluation" id="coloredSlider"></div>
 		</p>
 		<p>
 			  <h4>Vaniljaisuus</h4>
