@@ -14,3 +14,10 @@ table, th, td {
     border: 1px solid black;
     padding: 10px;
 }
+
+
+#slider.ui-slider-range.ui-widget-header {
+    background: #A87858;
+}
+
+// right: #f6dcc6
