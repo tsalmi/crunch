@@ -63,6 +63,7 @@ function createChart(id, title, axis1, axis2, data1, data2) {
 	{
 		theme: "theme3",
 				animationEnabled: true,
+		backgroundColor: "#2d1616",
 		title:{
 			text: title,
 			fontSize: 20

@@ -205,9 +205,9 @@
 		</p>
 		<p>
 			  <h4>Savuisuus</h4>
-			  <h4 align="left">0 %</h4>
-			  <h4 align="right">100 %</h4>
-
+			  <p style="float:left">0 %</p>
+			  <p style="float:right">100 %</p>
+			  <div style="clear:both"></div>
 			  <div id="savuisuus" class="evaluation" id="coloredSlider"></div>
 		</p>
 		<p>
