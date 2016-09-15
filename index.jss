@@ -128,7 +128,7 @@
 				user 	: 'root',
 				password: 'qwerty',
 				database: 'viski'
-				/* 
+				/*
 				host     : 'mmdsql01.mmd.net',
 				user     : 'uniqueel',
 				password : 'qvBzZY8xkGrxffp3',
@@ -163,7 +163,7 @@
 	}
 ?>
 <!doctype html>
-<html lang="fi">
+<html lang="fi" style="min-height: 100%; margin:0;">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
 	<title>Tast page</title>
@@ -176,8 +176,8 @@
 	<script type="text/javascript" src="front.js"></script>
 	<script type="text/javascript" src="pearson.js"></script>
 </head>
-<body>
-<div id="tabs">
+<body class="body-style">
+<div id="tabs" class="div-style">
 	<ul>
 		<li><a href="#tabs-1">Kirjautuminen</a></li> 
 		<li><a href="#tabs-2">Oma arvostelu</a></li>
