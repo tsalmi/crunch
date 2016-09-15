@@ -123,17 +123,17 @@
 		
 		var createConnection = function() {
 			 var connection = mysql.createConnection({
-				
+				/*
 				host 	: 'localhost',
 				user 	: 'root',
 				password: 'qwerty',
 				database: 'viski'
-				/*
+				*/
 				host     : 'mmdsql01.mmd.net',
 				user     : 'uniqueel',
 				password : 'qvBzZY8xkGrxffp3',
 				database : 'uniqueel'
-				*/
+			
 			});
 			return connection;		
 		 }

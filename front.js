@@ -66,7 +66,8 @@ function createChart(id, title, axis1, axis2, data1, data2) {
 		backgroundColor: "#2d1616",
 		title:{
 			text: title,
-			fontSize: 20
+			fontSize: 20,
+			fontColor: "white"
 		},
 		toolTip: {
 			shared: true
@@ -118,6 +119,7 @@ function createChart(id, title, axis1, axis2, data1, data2) {
 		
 		],
 	  legend:{
+		fontColor: "white",
 		cursor:"pointer",
 		itemclick: function(e){
 		  if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
