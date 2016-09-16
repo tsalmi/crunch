@@ -13,7 +13,14 @@ function login() {
 
 function initProducts() {
 	for (var i in products) {
-		$('#product').append('<option value="'+ i + '">' + products[i] + '</option>');
+		$('.product').append('<option value="'+ i + '">' + products[i] + '</option>');
+	}
+	$('#resultProduct').change(function() {
+		location.href = 'index.jss?action=load&product=' + $('#resultProduct').val();
+	});
+	var product = url("?product");
+	if (product) {
+		$('#resultProduct').val(product);
 	}
 }
 

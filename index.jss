@@ -115,6 +115,7 @@
 			 		        else {
 			 		        	write( "<br>found");
 			 		        	session.data.result.all = rows;			
+			 		        	write("Session: " + JSON.stringify(session.data));
 			 		        }			 		        
 			        	});
         	connection.end();
@@ -123,17 +124,17 @@
 		
 		var createConnection = function() {
 			 var connection = mysql.createConnection({
-				/*
+				
 				host 	: 'localhost',
 				user 	: 'root',
 				password: 'qwerty',
 				database: 'viski'
-				*/
+				/*
 				host     : 'mmdsql01.mmd.net',
 				user     : 'uniqueel',
 				password : 'qvBzZY8xkGrxffp3',
 				database : 'uniqueel'
-			
+			*/
 			});
 			return connection;		
 		 }
@@ -160,6 +161,12 @@
 		});
 		//while (!session.data.result.all) {
 		//}
+	}
+	else if (request.query.action == 'load') {
+		var connection = createConnection();
+		connection.connect(function(err)  { if (err) write("cannot connect to database") });
+		write("product: " + request.query.product + " username: " + session.data.username);
+		dbFindEvaluations(connection, request.query.product, session.data.username);
 	}
 ?>
 <!doctype html>
@@ -199,8 +206,7 @@
 	<div id="tabs-2">
 		<p>
 			<h2 class="demoHeaders">Valitse arvosteltava viski</h2>
-			<select id="product">
-				
+			<select id="product" class="product">
 			</select>
 		</p>
 		<p>
@@ -240,6 +246,12 @@
 		</p>
 	</div>
 	<div id="tabs-3">
+		<p>
+			<h2 class="demoHeaders">Valitse viski</h2>
+			<select id="resultProduct" class="product">
+			</select>
+		</p>
+		</select>
 		<span id="resultitle"></span>
 		<span id="result"></span>
 		<h4>L&auml;himp&auml;n&auml; omaa maukuasi olevat henkil&ouml;t</h4> 
@@ -278,7 +290,7 @@
 		showPearson();
 	}
 	$( document ).ready(function() {
-		if (action == 'save') {
+		if (action == 'save' || action == 'load') {
 			document.location.href = 'index.jss?tab=2';
 		}
 	});
