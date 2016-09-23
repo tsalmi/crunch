@@ -18,9 +18,9 @@ function initProducts() {
 	$('#resultProduct').change(function() {
 		location.href = 'index.jss?action=load&product=' + $('#resultProduct').val();
 	});
-	var product = url("?product");
-	if (product) {
-		$('#resultProduct').val(product);
+	var result = getDBResult();
+	if (result) {
+		$('#resultProduct').val(result.product);
 	}
 }
 
@@ -46,13 +46,8 @@ function results() {
 }
 
 function createAverageChart() {
-	var result = getCookie("result");
-	if (result) {
-		var json = JSON.parse(result);
-	}
-	else {
-		return;
-	}
+	var json = getDBResult();
+	
 	var own = json.own[0];
 	var avg = json.avg[0];
 	$("#resultitle").html('<h4>Viski:' +  products[json.product] + '</h4>');
@@ -66,6 +61,8 @@ function createAverageChart() {
 }
 	
 function createChart(id, title, axis1, axis2, data1, data2) {
+	var json = getDBResult();
+	
 	var chart = new CanvasJS.Chart(id,
 	{
 		theme: "theme3",
@@ -144,7 +141,7 @@ function createChart(id, title, axis1, axis2, data1, data2) {
 
 
 var showPearson = function() {
-	var result = getCookie("result");
+	var json = getDBResult();
 	var pearsonlist = $('#pearsonlist');
 	pearsonlist.empty();
 	pearsonlist.append('<tr><th>Lempinimi</th><th>Korrelaatio</th></tr>');
@@ -194,3 +191,12 @@ function getCookie(name) {
 	if (parts.length == 2) return parts.pop().split(";").shift();
 }
 	
+function getDBResult() {
+	var result = getCookie("result");
+	if (result) {
+		return JSON.parse(result);
+	}
+	else {
+		return null;
+	}	
+}
