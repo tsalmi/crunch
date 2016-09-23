@@ -271,7 +271,12 @@
 	var tab = url("?tab");
 	var action = url("?action");
 	if (! tab) {
-		tab = 0;
+		if (action == 'load' || action == 'save') {
+			tab = 2;
+		}
+		else {
+			tab = 0;
+		}
 	}	
 	initProducts();
 	$( "#tabs" ).tabs({ active: tab });

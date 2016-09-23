@@ -48,6 +48,10 @@ function results() {
 function createAverageChart() {
 	var json = getDBResult();
 	
+	if (! json || json.own.length == 0) {
+		$("#resultitle").html('Results not found, please log in');
+		return;
+	}
 	var own = json.own[0];
 	var avg = json.avg[0];
 	$("#resultitle").html('<h4>Viski:' +  products[json.product] + '</h4>');
@@ -141,13 +145,12 @@ function createChart(id, title, axis1, axis2, data1, data2) {
 
 
 var showPearson = function() {
-	var json = getDBResult();
+	var result = getDBResult();
 	var pearsonlist = $('#pearsonlist');
 	pearsonlist.empty();
 	pearsonlist.append('<tr><th>Lempinimi</th><th>Korrelaatio</th></tr>');
 	if (result) {
-		var json = JSON.parse(result);
-		pearson = calculatePearson(json.own[0], json.all);
+		pearson = calculatePearson(result.own[0], result.all);
 		pearson.sort(function(a, b){
 			return a.pearson - b.pearson;
 		});
@@ -156,7 +159,7 @@ var showPearson = function() {
 				pearsonlist.append('<tr><td><a href="#match' + i + '">' + 
 						pearson[i].nickname + '</a></td><td>' + 
 						parseFloat(pearson[i].pearson).toFixed(2) + '</td></tr>');
-				showCompareChart('match' + i, pearson[i].nickname, json.own[0], json.all);
+				showCompareChart('match' + i, pearson[i].nickname, result.own[0], result.all);
 			}	
 		}
 	}
