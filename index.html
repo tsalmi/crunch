@@ -1,5 +1,122 @@
-<html>
+<!doctype html>
+<html lang="fi">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+	<title>Tast page</title>
+	<link href="jquery/jquery-ui.css" rel="stylesheet">
+	<link href="front.css" rel="stylesheet">
+	<script src="jquery/external/jquery/jquery.js"></script>
+	<script type="text/javascript" src="jquery/url.js"></script>
+	<script src="jquery/jquery-ui.js"></script>
+	<script type="text/javascript" src="canvas/jquery.canvasjs.min.js"></script>
+	<script type="text/javascript" src="front.js"></script>
+	<script type="text/javascript" src="pearson.js"></script>
+</head>
+<body>
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Kirjautuminen</a></li> 
+		<li><a href="#tabs-2">Oma arvostelu</a></li>
+		<li><a href="#tabs-3">Tulokset</a></li>
+	</ul>
+	<div id="tabs-1">
+		<p>
+			<label for="username">Username</label>
+			<input type="text" id="username">
+		</p>
+		<p>
+			<label for="nickname">Lempinimi</label>
+			<input type="text" id="nickname">
+		</p>
+		<p>
+			<button id="button" class="button" onclick="login()">Kirjaudu</button>
+		</p>
+	</div>
+	<div id="tabs-2">
+		<p>
+			<h2 class="demoHeaders">Valitse arvosteltava viski</h2>
+			<select id="product">
+				
+			</select>
+		</p>
+		<p>
+			  <h4>Savuisuus</h4>
+			  <h4 align="left">0 %</h4>
+			  <h4 align="right">100 %</h4>
+
+			  <div id="savuisuus" class="evaluation" id="coloredSlider"></div>
+		</p>
+		<p>
+			  <h4>Vaniljaisuus</h4>
+			  <div id="vaniljaisuus" class="evaluation"></div>
+		 </p>
+		<p>
+			  <h4>Kukkaisuus</h4>
+			  <div id="kukkaisuus" class="evaluation"></div>
+		</p>
+		<p>
+			  <h4>Mausteisuus</h4>
+			  <div id="mausteisuus" class="evaluation"></div>
+		</p>
+		<p>
+			  <h4>Maltaisuus</h4>
+			  <div id="maltaisuus" class="evaluation"></div>
+		</p>		
+		<p>
+			  <h4>Makeus</h4>
+			  <div id="makeus" class="evaluation"></div>
+		</p>		
+		<p>
+			  <h4>Miellyttavyys</h4>
+			  <div id="miellyttavyys" class="evaluation"></div>
+		</p>
+		<p></p>
+		<p>
+			<button id="button" class="button" onclick="results()">Tallenna</button>
+		</p>
+	</div>
+	<div id="tabs-3">
+		<span id="resultitle"></span>
+		<span id="result"></span>
+		<h4>L&auml;himp&auml;n&auml; omaa maukuasi olevat henkil&ouml;t</h4> 
+		<table id="pearsonlist">
+		</table>
+		<hr/>
+		<div id="chartAverage" style="height: 300px; width: 100%;"></div>
+		<hr/>
+		<div id="match0" style="height: 300px; width: 100%;"></div>
+		<hr/>
+		<div id="match1" style="height: 300px; width: 100%;"></div>
+		<hr/>
+		<div id="match2" style="height: 300px; width: 100%;"> </div>
+	</div>
+</div>
 <script>
- location.href = 'index.jss';
+	var tab = url("?tab");
+	var action = url("?action");
+	if (! tab) {
+		tab = 0;
+	}	
+	initProducts();
+	$( "#tabs" ).tabs({ active: tab });
+	$( ".button" ).button();
+	$( "#selectmenu" ).selectmenu();		
+	$( ".evaluation" ).slider({
+        value: 50,
+		min: 0,
+		max: 100,
+		range: "min",
+        animate: true,
+     });
+	var chart = createAverageChart();
+	chart.render();
+	showPearson();
+	$( document ).ready(function() {
+		if (action == 'save') {
+			document.location.href = 'index.jss?tab=2';
+		}
+	});
+
 </script>
+</body>
 </html>

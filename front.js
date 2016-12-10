@@ -7,8 +7,24 @@ products[4] = "Highland Park";
 
 
 function login() {
-	location.href = "index.jss?username=" + $("#username").val() + "&nickname=" + $("#nickname").val() + "&tab=1";  
-	// $( "#tabs" ).tabs({ active: 1 });
+	// location.href = "index.jss?username=" + $("#username").val() + "&nickname=" + $("#nickname").val() + "&tab=1";  
+	 $.ajax({
+           url: '/viski/login',
+           type: 'POST',
+           contentType: "application/json; charset=utf-8",
+           dataType: 'json',
+           data:  JSON.stringify({ "login" : $("#username").val(),
+        	   "nickname" : $("#nickname").val()
+           }),
+           success: function (data, textStatus, xhr) {
+               console.log(data);
+           },
+           error: function (xhr, textStatus, errorThrown) {
+               console.log('Error in Operation');
+           }
+
+       });
+	$( "#tabs" ).tabs({ active: 1 });
 }
 
 function initProducts() {
@@ -26,7 +42,7 @@ function results() {
 	var makeus = $("#makeus").slider("value");
 	var miellyttavyys = $("#miellyttavyys").slider("value");
 	var product = $("#product").val();
-	location.href = 'index.jss?action=save&tab=1' +
+	/*  location.href = 'index.jss?action=save&tab=1' +
 	'&product=' + product +
 	'&savuisuus=' + savuisuus + 
 	'&vaniljaisuus=' + vaniljaisuus + 
@@ -35,7 +51,8 @@ function results() {
 	'&maltaisuus=' + maltaisuus + 
     '&makeus=' + makeus + 
 	'&miellyttavyys=' + miellyttavyys;
-//	$( "#tabs" ).tabs({ active: 2 });
+	*/
+	$( "#tabs" ).tabs({ active: 2 });
 }
 
 function createAverageChart() {
