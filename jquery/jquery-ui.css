@@ -844,8 +844,8 @@ body .ui-tooltip {
 	font-size: 1em;
 }
 .ui-widget-content {
-	border: 1px solid #2d1616;
-	background: #2d1616;
+	border: 1px solid white;
+	background: #2d1616;  
 	color: #FFFFFF;
 }
 .ui-widget-content a {
@@ -854,6 +854,7 @@ body .ui-tooltip {
 .ui-widget-header {
 	border: 1px solid #2d1616;
 	background: #2d1616 url("images/ui-bg_highlight-soft_0_2d1616_1x100.png") 50% 50% repeat-x;
+	/*  #BD9476 */
 	color: #1C0E00;
 	font-weight: bold;
 }

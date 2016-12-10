@@ -29,7 +29,14 @@ function login() {
 
 function initProducts() {
 	for (var i in products) {
-		$('#product').append('<option value="'+ i + '">' + products[i] + '</option>');
+		$('.product').append('<option value="'+ i + '">' + products[i] + '</option>');
+	}
+	$('#resultProduct').change(function() {
+		location.href = 'index.jss?action=load&product=' + $('#resultProduct').val();
+	});
+	var result = getDBResult();
+	if (result) {
+		$('#resultProduct').val(result.product);
 	}
 }
 
@@ -56,16 +63,14 @@ function results() {
 }
 
 function createAverageChart() {
-	var result = getCookie("result");
-	if (result) {
-		var json = JSON.parse(result);
-	}
-	else {
+	var json = getDBResult();
+	
+	if (! json || json.own.length == 0) {
+		$("#resultitle").html('Results not found, please log in');
 		return;
 	}
 	var own = json.own[0];
 	var avg = json.avg[0];
-	var all = json.all[0];
 	$("#resultitle").html('<h4>Viski:' +  products[json.product] + '</h4>');
 	return createChart(
 			"chartAverage",
@@ -73,17 +78,21 @@ function createAverageChart() {
 			"Oma arvio", 
 			"Vastanneiden keskiarvo",
 			own, 
-			all);
+			avg);
 }
 	
 function createChart(id, title, axis1, axis2, data1, data2) {
+	var json = getDBResult();
+	
 	var chart = new CanvasJS.Chart(id,
 	{
 		theme: "theme3",
 				animationEnabled: true,
+		backgroundColor: "#2d1616",
 		title:{
 			text: title,
-			fontSize: 20
+			fontSize: 20,
+			fontColor: "white"
 		},
 		toolTip: {
 			shared: true
@@ -135,6 +144,7 @@ function createChart(id, title, axis1, axis2, data1, data2) {
 		
 		],
 	  legend:{
+		fontColor: "white",
 		cursor:"pointer",
 		itemclick: function(e){
 		  if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
@@ -152,13 +162,12 @@ function createChart(id, title, axis1, axis2, data1, data2) {
 
 
 var showPearson = function() {
-	var result = getCookie("result");
+	var result = getDBResult();
 	var pearsonlist = $('#pearsonlist');
 	pearsonlist.empty();
 	pearsonlist.append('<tr><th>Lempinimi</th><th>Korrelaatio</th></tr>');
 	if (result) {
-		var json = JSON.parse(result);
-		pearson = calculatePearson(json.own[0], json.all);
+		pearson = calculatePearson(result.own[0], result.all);
 		pearson.sort(function(a, b){
 			return a.pearson - b.pearson;
 		});
@@ -167,7 +176,7 @@ var showPearson = function() {
 				pearsonlist.append('<tr><td><a href="#match' + i + '">' + 
 						pearson[i].nickname + '</a></td><td>' + 
 						parseFloat(pearson[i].pearson).toFixed(2) + '</td></tr>');
-				showCompareChart('match' + i, pearson[i].nickname, json.own[0], json.all);
+				showCompareChart('match' + i, pearson[i].nickname, result.own[0], result.all);
 			}	
 		}
 	}
@@ -202,3 +211,12 @@ function getCookie(name) {
 	if (parts.length == 2) return parts.pop().split(";").shift();
 }
 	
+function getDBResult() {
+	var result = getCookie("result");
+	if (result) {
+		return JSON.parse(result);
+	}
+	else {
+		return null;
+	}	
+}
