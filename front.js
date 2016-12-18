@@ -4,23 +4,26 @@ products[1] = "Laphroaig 10y";
 products[2] = "Famous Grouse";
 products[3] = "Macallan 12y"; 
 products[4] = "Highland Park";
-
+var loginName = null;
 
 function login() {
 	// location.href = "index.jss?username=" + $("#username").val() + "&nickname=" + $("#nickname").val() + "&tab=1";  
+	loginName = $("#username").val();
 	 $.ajax({
            url: '/viski/login',
            type: 'POST',
            contentType: "application/json; charset=utf-8",
            dataType: 'json',
-           data:  JSON.stringify({ "login" : $("#username").val(),
-        	   "nickname" : $("#nickname").val()
+           data:  JSON.stringify(
+        		   { "login" : loginName,
+        			 "nickname" : $("#nickname").val()
            }),
            success: function (data, textStatus, xhr) {
                console.log(data);
            },
            error: function (xhr, textStatus, errorThrown) {
                console.log('Error in Operation');
+               alert("login failed: " + textStatus + " " + errorThrown);
            }
 
        });
@@ -40,26 +43,35 @@ function initProducts() {
 	}
 }
 
-function results() {
-	var savuisuus = $("#savuisuus").slider("value");
-	var vaniljaisuus =  $("#vaniljaisuus").slider("value");
-	var kukkaisuus = $("#kukkaisuus").slider("value");
-	var mausteisuus = $("#mausteisuus").slider("value");
-	var maltaisuus = $("#maltaisuus").slider("value");
-	var makeus = $("#makeus").slider("value");
-	var miellyttavyys = $("#miellyttavyys").slider("value");
-	var product = $("#product").val();
-	/*  location.href = 'index.jss?action=save&tab=1' +
-	'&product=' + product +
-	'&savuisuus=' + savuisuus + 
-	'&vaniljaisuus=' + vaniljaisuus + 
-	'&kukkaisuus=' + kukkaisuus +
-	'&mausteisuus=' + mausteisuus + 
-	'&maltaisuus=' + maltaisuus + 
-    '&makeus=' + makeus + 
-	'&miellyttavyys=' + miellyttavyys;
-	*/
-	$( "#tabs" ).tabs({ active: 2 });
+function save() {
+	 $.ajax({
+         url: '/viski/save',
+         type: 'POST',
+         contentType: "application/json; charset=utf-8",
+         dataType: 'json',
+         data:  JSON.stringify(
+        		 {
+        			"login" : loginName, 
+        			"product" : $("#product").val(),
+        			"savuisuus" : $("#savuisuus").slider("value"),
+        			"vaniljaisuus" :  $("#vaniljaisuus").slider("value"),
+        			"kukkaisuus" : $("#kukkaisuus").slider("value"),
+        			"mausteisuus" : $("#mausteisuus").slider("value"),
+        			"maltaisuus" : $("#maltaisuus").slider("value"),
+        			"makeus" : $("#makeus").slider("value"),
+        			"miellyttavyys" : $("#miellyttavyys").slider("value")
+         }),
+         success: function (data, textStatus, xhr) {
+             console.log(data);
+             alert("Values saved");
+         },
+         error: function (xhr, textStatus, errorThrown) {
+             console.log('Error in Operation');
+             alert("Save failed: " + textStatus + " " + errorThrown);
+         }
+
+     });
+ // $( "#tabs" ).tabs({ active: 2 });
 }
 
 function createAverageChart() {

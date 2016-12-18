@@ -14,5 +14,6 @@ CREATE TABLE viski.evaluation (
 );
 
 create table viski.userdata (
-    login varchar(24) primary key
+    login varchar(24) primary key,
+    nickname varchar(48)
 );
