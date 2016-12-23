@@ -6,7 +6,7 @@ products[3] = "Macallan 12y";
 products[4] = "Highland Park";
 var loginName = null;
 var currentProduct = 0;
-
+var currentResult = null;
 
 function login() {
 	// location.href = "index.jss?username=" + $("#username").val() + "&nickname=" + $("#nickname").val() + "&tab=1";  
@@ -45,6 +45,7 @@ function showArvostelu() {
 }
 
 function showCurrentResult() {
+	currentProduct =  $('#product').val();
 	searchResult(currentProduct);
 }
 
@@ -52,7 +53,8 @@ function searchResult(product) {
 	$( "#tabs" ).tabs({ active: 2 });
 	initProducts();
 	$('#resultProduct').change(function() {
-		setResult();
+		currentProduct =  $('#resultProduct').val();
+		showCurrentResult();
 	});
 
 	$.ajax({
@@ -68,7 +70,8 @@ function searchResult(product) {
          ),
          success: function (data, textStatus, xhr) {
              console.log(data);
-             showResult(data);
+             currentResult = data;
+             showResult();
          },
          error: function (xhr, textStatus, errorThrown) {
              console.log('Error in Operation');
@@ -80,7 +83,7 @@ function searchResult(product) {
 
 function showResult(result) {
 	initProducts()
-	$('#resultProduct').val(result.product);
+	$('#resultProduct').val(currentProduct);
 	var chart = createAverageChart();
 	chart.render();
 	showPearson();
@@ -129,7 +132,7 @@ function save() {
 }
 
 function createAverageChart() {
-	var json = getDBResult();
+	var json = currentResult;
 	
 	if (! json || json.own.length == 0) {
 		$("#resultitle").html('Results not found, please log in');
@@ -137,7 +140,7 @@ function createAverageChart() {
 	}
 	var own = json.own[0];
 	var avg = json.avg[0];
-	$("#resultitle").html('<h4>Viski:' +  products[json.product] + '</h4>');
+	$("#resultitle").html('<h4>Viski:' +  products[currentProduct] + '</h4>');
 	return createChart(
 			"chartAverage",
 			"Omat tulokset vs. kaikkien keskiarvo ",
@@ -148,7 +151,7 @@ function createAverageChart() {
 }
 	
 function createChart(id, title, axis1, axis2, data1, data2) {
-	var json = getDBResult();
+	var json = currentResult;
 	
 	var chart = new CanvasJS.Chart(id,
 	{
@@ -228,7 +231,7 @@ function createChart(id, title, axis1, axis2, data1, data2) {
 
 
 var showPearson = function() {
-	var result = getDBResult();
+	var result = currentResult;
 	var pearsonlist = $('#pearsonlist');
 	pearsonlist.empty();
 	pearsonlist.append('<tr><th>Lempinimi</th><th>Korrelaatio</th></tr>');
