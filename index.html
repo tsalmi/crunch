@@ -73,6 +73,7 @@
 		<p></p>
 		<p>
 			<button id="button" class="button" onclick="save()">Tallenna</button>
+			<button id="button" class="button" onclick="showCurrentResult()">Katso tulokset</button>
 		</p>
 	</div>
 	<div id="tabs-3">
@@ -92,33 +93,9 @@
 	</div>
 </div>
 <script>
-	var tab = url("?tab");
-	var action = url("?action");
-	if (! tab) {
-		tab = 0;
-	}	
-	initProducts();
-	$( "#tabs" ).tabs({ active: tab });
+	$( "#tabs" ).tabs({ active: 0 });
 	$( ".button" ).button();
 	$( "#selectmenu" ).selectmenu();		
-	$( ".evaluation" ).slider({
-        value: 50,
-		min: 0,
-		max: 100,
-		range: "min",
-        animate: true,
-     });
-     if (tab == 2) {
-		var chart = createAverageChart();
-		chart.render();
-		showPearson();
-	}
-	$( document ).ready(function() {
-		if (action == 'save') {
-			document.location.href = 'index.jss?tab=2';
-		}
-	});
-
 </script>
 </body>
 </html>

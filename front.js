@@ -5,6 +5,8 @@ products[2] = "Famous Grouse";
 products[3] = "Macallan 12y"; 
 products[4] = "Highland Park";
 var loginName = null;
+var currentProduct = 0;
+
 
 function login() {
 	// location.href = "index.jss?username=" + $("#username").val() + "&nickname=" + $("#nickname").val() + "&tab=1";  
@@ -20,6 +22,7 @@ function login() {
            }),
            success: function (data, textStatus, xhr) {
                console.log(data);
+               showArvostelu();
            },
            error: function (xhr, textStatus, errorThrown) {
                console.log('Error in Operation');
@@ -27,23 +30,74 @@ function login() {
            }
 
        });
-	$( "#tabs" ).tabs({ active: 1 });
 }
+
+function showArvostelu() {
+	$( "#tabs" ).tabs({ active: 1 });
+	initProducts();
+	$( ".evaluation" ).slider({
+	    value: 50,
+		min: 0,
+		max: 100,
+		range: "min",
+	    animate: true,
+	 });
+}
+
+function showCurrentResult() {
+	searchResult(currentProduct);
+}
+
+function searchResult(product) {
+	$( "#tabs" ).tabs({ active: 2 });
+	initProducts();
+	$('#resultProduct').change(function() {
+		setResult();
+	});
+
+	$.ajax({
+         url: '/viski/result',
+         type: 'POST',
+         contentType: 'application/json; charset=utf-8',
+         dataType: 'json',
+         data:  JSON.stringify(
+        		 {
+        			"login" : loginName,
+        			"product" : product
+        		 }
+         ),
+         success: function (data, textStatus, xhr) {
+             console.log(data);
+             showResult(data);
+         },
+         error: function (xhr, textStatus, errorThrown) {
+             console.log('Error in Operation');
+             alert("Save failed: " + textStatus + " " + errorThrown);
+         }
+
+     });
+}
+
+function showResult(result) {
+	initProducts()
+	$('#resultProduct').val(result.product);
+	var chart = createAverageChart();
+	chart.render();
+	showPearson();
+}
+
+
+
 
 function initProducts() {
 	for (var i in products) {
-		$('.product').append('<option value="'+ i + '">' + products[i] + '</option>');
+		$('#product').append('<option value="'+ i + '">' + products[i] + '</option>');
 	}
-	$('#resultProduct').change(function() {
-		location.href = 'index.jss?action=load&product=' + $('#resultProduct').val();
-	});
-	var result = getDBResult();
-	if (result) {
-		$('#resultProduct').val(result.product);
-	}
+
 }
 
 function save() {
+	currentProduct =  $("#product").val();
 	 $.ajax({
          url: '/viski/save',
          type: 'POST',
@@ -52,7 +106,7 @@ function save() {
          data:  JSON.stringify(
         		 {
         			"login" : loginName, 
-        			"product" : $("#product").val(),
+        			"product" : currentProduct,
         			"savuisuus" : $("#savuisuus").slider("value"),
         			"vaniljaisuus" :  $("#vaniljaisuus").slider("value"),
         			"kukkaisuus" : $("#kukkaisuus").slider("value"),
