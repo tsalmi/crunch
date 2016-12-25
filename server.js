@@ -116,6 +116,7 @@ app.post('/viski/result', function(req,res) {
 		    });
 		    // After all data is returned, close connection and return results
 		    query.on('end', () => {
+		    	done();
 				app.findAvgEvaluation(evaluation, results, res);		    	
 		    });
 	  });		  
@@ -141,6 +142,7 @@ app.findAvgEvaluation = function(evaluation, results, res) {
 		    });
 		    // After all data is returned, close connection and return results
 		    query.on('end', () => {
+		    	done();
 				app.findAllEvaluation(evaluation, results, res);		    	
 		    });
 	  });		  	
@@ -165,7 +167,8 @@ app.findAllEvaluation = function(evaluation, results, res) {
 		    });
 		    // After all data is returned, close connection and return results
 		    query.on('end', () => {
-		    	 return res.json(results);		    	
+		    	done();
+		    	return res.json(results);		    	
 		    });
 	  });		  	
 }

@@ -38,7 +38,6 @@ function mainPage() {
 
 function showArvostelu() {
 	$( "#tabs" ).tabs({ active: 2 });
-	initProducts();
 	$( ".evaluation" ).slider({
 	    value: 50,
 		min: 0,
@@ -59,11 +58,6 @@ function showCurrentResult() {
 
 function searchResult(product) {
 	$( "#tabs" ).tabs({ active: 3 });
-	initProducts();
-	$('#resultProduct').change(function() {
-		currentProduct =  $('#resultProduct').val();
-		searchResult(currentProduct);
-	});
 
 	$.ajax({
          url: '/viski/result',
@@ -90,7 +84,6 @@ function searchResult(product) {
 }
 
 function showResult() {
-	initProducts();
 	var chart = createAverageChart();
 	chart.render();
 	showPearson();
