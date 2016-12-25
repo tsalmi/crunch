@@ -15,9 +15,10 @@
 <body>
 <div id="tabs">
 	<ul>
-		<li><a href="#tabs-1">Kirjautuminen</a></li> 
-		<li><a href="#tabs-2">Oma arvostelu</a></li>
-		<li><a href="#tabs-3">Tulokset</a></li>
+		<li><a href="#tabs-1">Login</a></li> 
+		<li><a href="#tabs-2">Main page</a></li> 
+		<li><a href="#tabs-3">Own nose</a></li>
+		<li><a href="#tabs-4">Results</a></li>
 	</ul>
 	<div id="tabs-1">
 		<p>
@@ -25,18 +26,25 @@
 			<input type="text" id="username">
 		</p>
 		<p>
-			<label for="nickname">Lempinimi</label>
+			<label for="nickname">Nickname</label>
 			<input type="text" id="nickname">
 		</p>
 		<p>
-			<button id="button" class="button" onclick="login()">Kirjaudu</button>
+			<button id="button" class="button" onclick="login()">Login</button>
 		</p>
 	</div>
 	<div id="tabs-2">
 		<p>
-			<h2 class="demoHeaders">Valitse arvosteltava viski</h2>
+		<a href="javascript:showArvostelu()">Evaluate a Viski</a>
+		</p>
+		<p>
+		<a href="javascript:showCurrentResult()">Show results</a>
+		</p>
+	</div>
+	<div id="tabs-3">
+		<p>
+			<h2 class="demoHeaders">Choose a viski</h2>
 			<select id="product">
-				
 			</select>
 		</p>
 		<p>
@@ -72,14 +80,18 @@
 		</p>
 		<p></p>
 		<p>
-			<button id="button" class="button" onclick="save()">Tallenna</button>
-			<button id="button" class="button" onclick="showCurrentResult()">Katso tulokset</button>
+			<button id="button" class="button" onclick="save()">Save</button>
+			<button id="button" class="button" onclick="showCurrentResult()">See results</button>
 		</p>
 	</div>
-	<div id="tabs-3">
+	<div id="tabs-4">
 		<span id="resultitle"></span>
 		<span id="result"></span>
-		<h4>L&auml;himp&auml;n&auml; omaa maukuasi olevat henkil&ouml;t</h4> 
+		<p>
+			<select id="resultProduct">
+			</select>				
+		</p>
+		<h4>People who are closest to you nose</h4> 
 		<table id="pearsonlist">
 		</table>
 		<hr/>
@@ -95,7 +107,15 @@
 <script>
 	$( "#tabs" ).tabs({ active: 0 });
 	$( ".button" ).button();
-	$( "#selectmenu" ).selectmenu();		
+	$( "#selectmenu" ).selectmenu();	
+	$(document).ready(function() {
+		if (currentUser) {
+			mainPage()
+		}
+	});
+			
+		
 </script>
+	
 </body>
 </html>

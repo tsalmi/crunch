@@ -22,7 +22,7 @@ function login() {
            }),
            success: function (data, textStatus, xhr) {
                console.log(data);
-               showArvostelu();
+               mainPage();
            },
            error: function (xhr, textStatus, errorThrown) {
                console.log('Error in Operation');
@@ -32,8 +32,12 @@ function login() {
        });
 }
 
-function showArvostelu() {
+function mainPage() {
 	$( "#tabs" ).tabs({ active: 1 });
+}
+
+function showArvostelu() {
+	$( "#tabs" ).tabs({ active: 2 });
 	initProducts();
 	$( ".evaluation" ).slider({
 	    value: 50,
@@ -46,15 +50,19 @@ function showArvostelu() {
 
 function showCurrentResult() {
 	currentProduct =  $('#product').val();
+	if (!currentProduct || currentProduct == 0) {
+		currentProduct = 1;
+	}
 	searchResult(currentProduct);
 }
 
+
 function searchResult(product) {
-	$( "#tabs" ).tabs({ active: 2 });
+	$( "#tabs" ).tabs({ active: 3 });
 	initProducts();
 	$('#resultProduct').change(function() {
 		currentProduct =  $('#resultProduct').val();
-		showCurrentResult();
+		searchResult(currentProduct);
 	});
 
 	$.ajax({
@@ -81,20 +89,22 @@ function searchResult(product) {
      });
 }
 
-function showResult(result) {
-	initProducts()
-	$('#resultProduct').val(currentProduct);
+function showResult() {
+	initProducts();
 	var chart = createAverageChart();
 	chart.render();
 	showPearson();
 }
 
 
-
-
 function initProducts() {
+	$('#product').empty();
 	for (var i in products) {
 		$('#product').append('<option value="'+ i + '">' + products[i] + '</option>');
+	}
+	$('#resultProduct').empty();
+	for (var i in products) {
+		$('#resultProduct').append('<option value="'+ i + '">' + products[i] + '</option>');
 	}
 
 }
@@ -143,14 +153,15 @@ function createAverageChart() {
 	$("#resultitle").html('<h4>Viski:' +  products[currentProduct] + '</h4>');
 	return createChart(
 			"chartAverage",
-			"Omat tulokset vs. kaikkien keskiarvo ",
-			"Oma arvio", 
-			"Vastanneiden keskiarvo",
+			"Own Nose agains average ",
+			"Oma Nose", 
+			"Average",
 			own, 
 			avg);
 }
 	
 function createChart(id, title, axis1, axis2, data1, data2) {
+	$('#' + id).empty();
 	var json = currentResult;
 	
 	var chart = new CanvasJS.Chart(id,
@@ -234,7 +245,7 @@ var showPearson = function() {
 	var result = currentResult;
 	var pearsonlist = $('#pearsonlist');
 	pearsonlist.empty();
-	pearsonlist.append('<tr><th>Lempinimi</th><th>Korrelaatio</th></tr>');
+	pearsonlist.append('<tr><th>Nickname</th><th>Correlation</th></tr>');
 	if (result) {
 		pearson = calculatePearson(result.own[0], result.all);
 		pearson.sort(function(a, b){
@@ -265,8 +276,8 @@ function showCompareChart(id, nickname, own, json) {
 	
 	var chart =  createChart(
 			id,
-			'Omat tulokset vs. ' + nickname,
-			'Oma arvio', 
+			'Own nose agains ' + nickname,
+			'Own nose', 
 			nickname,
 			own, 
 			other);
@@ -278,14 +289,4 @@ function getCookie(name) {
 	var value = "; " + document.cookie;
 	var parts = value.split("; " + name + "=");
 	if (parts.length == 2) return parts.pop().split(";").shift();
-}
-	
-function getDBResult() {
-	var result = getCookie("result");
-	if (result) {
-		return JSON.parse(result);
-	}
-	else {
-		return null;
-	}	
 }
