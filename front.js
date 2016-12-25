@@ -58,7 +58,12 @@ function showCurrentResult() {
 
 function searchResult(product) {
 	$( "#tabs" ).tabs({ active: 3 });
-
+	$("#chartAverage").empty();
+	$("#match0").empty();
+	$("#match1").empty();
+	$("#match2").empty();
+	$("#pearsonlist").empty();
+	
 	$.ajax({
          url: '/viski/result',
          type: 'POST',
@@ -85,8 +90,10 @@ function searchResult(product) {
 
 function showResult() {
 	var chart = createAverageChart();
-	chart.render();
-	showPearson();
+	if (chart) {
+		chart.render();
+		showPearson();
+	}
 }
 
 
@@ -138,8 +145,8 @@ function createAverageChart() {
 	var json = currentResult;
 	
 	if (! json || json.own.length == 0) {
-		$("#resultitle").html('Results not found, please log in');
-		return;
+		$("#resultitle").html('Results not found');
+		return false;
 	}
 	var own = json.own[0];
 	var avg = json.avg[0];
@@ -205,13 +212,13 @@ function createChart(id, title, axis1, axis2, data1, data2) {
 			axisYType: "secondary",
 			showInLegend: true,
 			dataPoints:[
-			{label: "Savuisuus", y: data2.savuisuus},
-			{label: "Vaniljaisuus", y: data2.vaniljaisuus},
-			{label: "Kukkaisuus", y: data2.kukkaisuus},
-			{label: "Mausteisuus", y: data2.mausteisuus},
-			{label: "Maltaisuus", y: data2.maltaisuus},
-			{label: "Makeus", y: data2.makeus},
-			{label: "Miellyttavyys", y: data2.miellyttavyys},
+			{label: "Savuisuus", y: Math.round(data2.savuisuus)},
+			{label: "Vaniljaisuus", y: Math.round(data2.vaniljaisuus)},
+			{label: "Kukkaisuus", y: Math.round(data2.kukkaisuus)},
+			{label: "Mausteisuus", y: Math.round(data2.mausteisuus)},
+			{label: "Maltaisuus", y: Math.round(data2.maltaisuus)},
+			{label: "Makeus", y: Math.round(data2.makeus)},
+			{label: "Miellyttavyys", y: Math.round(data2.miellyttavyys)},
 			]
 		}
 		
