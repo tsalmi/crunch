@@ -150,11 +150,11 @@ function createAverageChart() {
 	}
 	var own = json.own[0];
 	var avg = json.avg[0];
-	$("#resultitle").html('<h4>Viski:' +  products[currentProduct] + '</h4>');
+	$("#resultitle").html('<h4>Whisky:' +  products[currentProduct] + '</h4>');
 	return createChart(
 			"chartAverage",
-			"Own Nose agains average ",
-			"Oma Nose", 
+			"My nose agains average ",
+			"My nose", 
 			"Average",
 			own, 
 			avg);
@@ -196,13 +196,13 @@ function createChart(id, title, axis1, axis2, data1, data2) {
 			legendText:  axis1,
 			showInLegend: true, 
 			dataPoints:[
-			{label: "Savuisuus", y: data1.savuisuus},
-			{label: "Vaniljaisuus", y: data1.vaniljaisuus},
-			{label: "Kukkaisuus", y: data1.kukkaisuus},
-			{label: "Mausteisuus", y: data1.mausteisuus},
-			{label: "Maltaisuus", y: data1.maltaisuus},
-			{label: "Makeus", y: data1.makeus},
-			{label: "Miellyttavyys", y: data1.miellyttavyys},
+			{label: "Smokiness", y: data1.savuisuus},
+			{label: "Vanillin", y: data1.vaniljaisuus},
+			{label: "Floral", y: data1.kukkaisuus},
+			{label: "Spiciness", y: data1.mausteisuus},
+			{label: "Maltiness", y: data1.maltaisuus},
+			{label: "Sweetness", y: data1.makeus},
+			{label: "Amenity", y: data1.miellyttavyys},
 			]
 		},
 		{
@@ -212,13 +212,13 @@ function createChart(id, title, axis1, axis2, data1, data2) {
 			axisYType: "secondary",
 			showInLegend: true,
 			dataPoints:[
-			{label: "Savuisuus", y: Math.round(data2.savuisuus)},
-			{label: "Vaniljaisuus", y: Math.round(data2.vaniljaisuus)},
-			{label: "Kukkaisuus", y: Math.round(data2.kukkaisuus)},
-			{label: "Mausteisuus", y: Math.round(data2.mausteisuus)},
-			{label: "Maltaisuus", y: Math.round(data2.maltaisuus)},
-			{label: "Makeus", y: Math.round(data2.makeus)},
-			{label: "Miellyttavyys", y: Math.round(data2.miellyttavyys)},
+			{label: "Smokiness", y: Math.round(data2.savuisuus)},
+			{label: "Vanillin", y: Math.round(data2.vaniljaisuus)},
+			{label: "Floral", y: Math.round(data2.kukkaisuus)},
+			{label: "Spiciness", y: Math.round(data2.mausteisuus)},
+			{label: "Maltiness", y: Math.round(data2.maltaisuus)},
+			{label: "Sweetness", y: Math.round(data2.makeus)},
+			{label: "Amenity", y: Math.round(data2.miellyttavyys)},
 			]
 		}
 		
@@ -276,8 +276,8 @@ function showCompareChart(id, nickname, own, json) {
 	
 	var chart =  createChart(
 			id,
-			'Own nose agains ' + nickname,
-			'Own nose', 
+			'My nose agains ' + nickname,
+			'My nose', 
 			nickname,
 			own, 
 			other);
