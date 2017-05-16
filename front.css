@@ -20,6 +20,22 @@ table, th, td {
     background: #A87858;
 }
 
+#savuisuus-handle,
+#vaniljaisuus-handle,
+#kukkaisuus-handle,
+#miellyttavyys-handle,
+#mausteisuus-handle,
+#maltaisuus-handle,
+#makeus-handle,
+#miellyttavyys-handle {
+    width: 3em;
+    height: 1.6em;
+    top: 50%;
+    margin-top: -.8em;
+    text-align: center;
+    line-height: 1.6em;
+}
+
 .body-style {
 	min-height: 100%; 
 	margin: 0; 

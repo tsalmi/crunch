@@ -38,13 +38,116 @@ function mainPage() {
 
 function showArvostelu() {
 	$( "#tabs" ).tabs({ active: 2 });
-	$( ".evaluation" ).slider({
+	$( "#savuisuus" ).slider({
 	    value: 50,
 		min: 0,
 		max: 100,
 		range: "min",
 	    animate: true,
-	 });
+		create: function() {
+			$("#savuisuus-handle").text( $( this ).slider( "value" ) + "%");
+		},
+		slide: function( event, ui ) {
+			$("#savuisuus-handle").text( ui.value + "%");
+		}
+	});
+	$( "#vaniljaisuus" ).slider({
+	    value: 50,
+		min: 0,
+		max: 100,
+		range: "min",
+	    animate: true,
+		create: function() {
+			$("#vaniljaisuus-handle").text( $( this ).slider( "value" ) + "%");
+		},
+		slide: function( event, ui ) {
+			$("#vaniljaisuus-handle").text( ui.value + "%");
+		}
+	});
+	$( "#kukkaisuus" ).slider({
+	    value: 50,
+		min: 0,
+		max: 100,
+		range: "min",
+	    animate: true,
+		create: function() {
+			$("#kukkaisuus-handle").text( $( this ).slider( "value" ) + "%");
+		},
+		slide: function( event, ui ) {
+			$("#kukkaisuus-handle").text( ui.value + "%");
+		}
+	});
+
+	
+	$( "#miellyttavyys" ).slider({
+	    value: 50,
+		min: 0,
+		max: 100,
+		range: "min",
+	    animate: true,
+		create: function() {
+			$("#miellyttavyys-handle").text( $( this ).slider( "value" ) + "%");
+		},
+		slide: function( event, ui ) {
+			$("#miellyttavyys-handle").text( ui.value + "%");
+		}
+	});
+
+	$( "#mausteisuus" ).slider({
+	    value: 50,
+		min: 0,
+		max: 100,
+		range: "min",
+	    animate: true,
+		create: function() {
+			$("#mausteisuus-handle").text( $( this ).slider( "value" ) + "%");
+		},
+		slide: function( event, ui ) {
+			$("#mausteisuus-handle").text( ui.value + "%");
+		}
+	});
+
+	$( "#maltaisuus" ).slider({
+	    value: 50,
+		min: 0,
+		max: 100,
+		range: "min",
+	    animate: true,
+		create: function() {
+			$("#maltaisuus-handle").text( $( this ).slider( "value" ) + "%");
+		},
+		slide: function( event, ui ) {
+			$("#maltaisuus-handle").text( ui.value + "%");
+		}
+	});
+
+	$( "#makeus" ).slider({
+	    value: 50,
+		min: 0,
+		max: 100,
+		range: "min",
+	    animate: true,
+		create: function() {
+			$("#makeus-handle").text( $( this ).slider( "value" ) + "%");
+		},
+		slide: function( event, ui ) {
+			$("#makeus-handle").text( ui.value + "%");
+		}
+	});
+
+	$( "#miellyttavyys" ).slider({
+	    value: 50,
+		min: 0,
+		max: 100,
+		range: "min",
+	    animate: true,
+		create: function() {
+			$("#miellyttavyys-handle").text( $( this ).slider( "value" ) + "%");
+		},
+		slide: function( event, ui ) {
+			$("#miellyttavyys-handle").text( ui.value + "%");
+		}
+	});
 }
 
 function showCurrentResult() {
@@ -153,7 +256,7 @@ function createAverageChart() {
 	$("#resultitle").html('<h4>Whisky:' +  products[currentProduct] + '</h4>');
 	return createChart(
 			"chartAverage",
-			"My nose agains average ",
+			"My nose against average ",
 			"My nose", 
 			"Average",
 			own, 
@@ -202,7 +305,7 @@ function createChart(id, title, axis1, axis2, data1, data2) {
 			{label: "Spiciness", y: data1.mausteisuus},
 			{label: "Maltiness", y: data1.maltaisuus},
 			{label: "Sweetness", y: data1.makeus},
-			{label: "Amenity", y: data1.miellyttavyys},
+			{label: "Pleasantness", y: data1.miellyttavyys},
 			]
 		},
 		{
@@ -218,7 +321,7 @@ function createChart(id, title, axis1, axis2, data1, data2) {
 			{label: "Spiciness", y: Math.round(data2.mausteisuus)},
 			{label: "Maltiness", y: Math.round(data2.maltaisuus)},
 			{label: "Sweetness", y: Math.round(data2.makeus)},
-			{label: "Amenity", y: Math.round(data2.miellyttavyys)},
+			{label: "Pleasantness", y: Math.round(data2.miellyttavyys)},
 			]
 		}
 		
@@ -276,7 +379,7 @@ function showCompareChart(id, nickname, own, json) {
 	
 	var chart =  createChart(
 			id,
-			'My nose agains ' + nickname,
+			'My nose against ' + nickname,
 			'My nose', 
 			nickname,
 			own, 
